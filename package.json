@@ -1,6 +1,6 @@
 {
   "name": "material-input",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "An easy drop-in material-input solution as a custom element",
   "main": "src/material-input.js",
   "directories": {
