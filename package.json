@@ -1,0 +1,35 @@
+{
+  "name": "material-input",
+  "version": "0.0.0",
+  "description": "An easy drop-in material-input solution as a custom element",
+  "main": "src/material-input.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuclei/material-input.git"
+  },
+  "keywords": [
+    "material-input",
+    "input",
+    "material",
+    "ui",
+    "web-components"
+  ],
+  "author": "Lukas Oppermann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nuclei/material-input/issues"
+  },
+  "homepage": "https://github.com/nuclei/material-input#readme",
+  "devDependencies": {
+    "babel-preset-latest": "^6.16.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-sourcemaps": "^1.6.0"
+  }
+}
