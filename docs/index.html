@@ -3,15 +3,18 @@
     <head>
         <meta charset="utf-8">
         <title>Material-input</title>
-        <script src="webcomponents.js"></script>
+        <script src="webcomponentsjs/webcomponents.js"></script>
         <script src="../src/material-input.js"></script>
         <!-- loading twice only so that the demo works online on github -->
-        <script src="https://rawgit.com/nuclei/material-input/master/dist/material-input.js"></script>
+        <!-- <script src="https://rawgit.com/nuclei/material-input/master/dist/material-input.js"></script> -->
         <style media="screen">
             body{
                 margin: 0;
                 font-family: sans-serif;
-                background: rgb(240,245,250);
+            }
+            material-input{
+                font-size: 26px;
+                color: rgb(95,61,196);
             }
             nav{
                 position: relative;
@@ -24,13 +27,8 @@
             nav div{
                 padding: 15px;
             }
-            article{
-                margin: 20px;
-                background: white;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-                border-radius: 2px;
-                padding: 15px;
-                min-height: 600px;
+            form{
+                padding: 50px;
             }
         </style>
     </head>
@@ -38,6 +36,13 @@
         <nav>
             <div>Material-input</div>
         </nav>
-
+        <form action="https://httpbin.org/get" method="get">
+            <material-input name="name" label="Hello"></material-input>
+            <material-input name="lastname" label="Lastname" placeholder="Your lastname"></material-input>
+            <material-input name="password" type="password" placeholder="Placeholder"></material-input>
+            <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="ähh" invalid></material-input>
+            <material-input name="address" label="Address" placeholder="Your Address" value="ähh" valid></material-input>
+            <button type="submit">Submit</button>
+        </form>
     </body>
 </html>
