@@ -13,8 +13,14 @@
                 font-family: sans-serif;
             }
             material-input{
-                font-size: 26px;
                 color: rgb(95,61,196);
+                margin: 15px 0;
+            }
+            material-input[name=name], material-input[name=lastname]{
+                font-size: 26px;
+            }
+            material-input[name=phone]{
+                width: 200px;
             }
             nav{
                 position: relative;
@@ -37,7 +43,7 @@
             <div>Material-input</div>
         </nav>
         <form action="https://httpbin.org/get" method="get">
-            <material-input name="name" label="Hello"></material-input>
+            <material-input name="name"></material-input>
             <material-input name="lastname" label="Lastname" placeholder="Your lastname"></material-input>
             <material-input name="password" type="password" placeholder="Placeholder"></material-input>
             <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="ähh" invalid></material-input>

@@ -11,10 +11,14 @@ class MaterialInput extends HTMLElement {
             <style>
                 :host{
                     color: rgb(54,79,199);
-                }
-                .material-input__container{
                     display: block;
                     position: relative;
+                }
+                .material-input__container{
+                    width: inherit;
+                    display: block;
+                    position: relative;
+                    margin: .5em 0;
                 }
                 .material-input__input{
                     box-sizing: border-box;
