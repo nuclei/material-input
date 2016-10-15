@@ -12,7 +12,7 @@
                 margin: 0;
                 font-family: sans-serif;
             }
-            material-input{
+            height{
                 margin: 15px 0;
             }
             material-input[name=name], material-input[name=lastname]{
@@ -23,8 +23,8 @@
                 --material-input-invalid-color: red;
                 --material-input-valid-color: green;
                 --material-input-border-color: orange;
-                --material-input-line-width: 3px;
-                --material-input-highlight-line-width: 8px;
+                --material-input-line-height: 3px;
+                --material-input-highlight-line-height: 8px;
             }
             material-input[name=phone]{
                 width: 200px;
@@ -59,4 +59,8 @@
             <button type="submit">Submit</button>
         </form>
     </body>
+    <script type="text/javascript">
+        console.log(document.querySelector('[name=phone]'));
+        document.querySelector('[name=phone]').setCustomValidity('thats not cool');
+    </script>
 </html>

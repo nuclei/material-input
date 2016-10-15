@@ -22,7 +22,8 @@ Load the `polyfill` and the `material-input.js` in your html page or however you
 ```
 
 ## Usage
-Just drop the `<material-input>` element into you html and add your text.
+Just drop the `<material-input>` element into you html `<form>` element and you are ready to go. A visually hidden `<input>` field will be created which syncs its values with the `<material-input>` to allow for normal forms to pick up the value.
+
 
 ```html
 <material-input name="username"></material-input>
@@ -42,10 +43,51 @@ You can use normal input placeholders instead of, or in combination with labels.
 <material-input name="username" label="username" placeholder="Choose your username"></material-input>
 ```
 
+### Value
+Like a normal input field, you can set the value using the attribute `value` in html or via javascript by either setting the attribute or by directly setting the `value` property.
+
+```html
+<!-- html -->
+<material-input name="animal" value="cat"></material-input>
+```
+
+```javascript
+// javascript
+document.querySelector('material-input.animal').value = 'cat';
+
+document.querySelector('material-input.animal').setAttribute('value','cat');
+```
+
+### Validation
+Validation works just like with any default `<input>` element. Add a `required` or set the `type` to `email` and you will get the browsers validation notifications.
+
+Additionally it is possible to explicitly set a field to be `invalid` by using the default `setCustomValidity` method on the `material-input`. You can read more about the [setCustomValidity feature on MDN](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Controlling_the_text_of_constraints_violation).
+
+```javascript
+document.querySelector('material-input.customValidatedItem').setCustomValidity('This is not valid.');
+```
+
 ## Custom styling
-Until browser support mixins, there is only basic styling. You can change the size of the text of all one one `material-input` which will increase its general size.
+Apart from basic styling on the `material-input` like `margins` or the `font-size` you can use the following `css properties` to for custom styling.
 
-Additionally you can set the font color for `material-input` which will change the color of the line below and label when active.
-
-### Limitation
-As of now only Chrome supports the `:host` element properly, even with the default polyfill. If you want to change the margin on the `material-input` you will need to wrap it in another element.
+```css
+/* select your specific input or all */
+material-input.some-class{
+    /* the text color of the input */
+    --material-input-text-color: black;
+    /* the text color of the placeholder or the floating label on an empty field */
+    --material-input-placeholder-color: grey;
+    /* the color of the border and label when the field is focused */
+    --material-input-highlight-color: indigo;
+    /* the color of the border and label when the field is in an invalid state */
+    --material-input-invalid-color: red;
+    /* the color of the border and label when the field is in a valid state */
+    --material-input-valid-color: green;
+    /* the default color of the bottom border */
+    --material-input-border-color: orange;
+    /* the height of the bottom border when the field is not focused */
+    --material-input-line-height: 1px;
+    /* the height of the bottom border when the field is focused */
+    --material-input-highlight-line-height: 3px;
+}
+```

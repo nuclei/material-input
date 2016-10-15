@@ -44,7 +44,7 @@ class MaterialInput extends HTMLElement {
                     display: block;
                     width: 100%;
                     border: none;
-                    border-bottom: var(--material-input-line-width, 1px) solid var(--material-input-border-color, rgb(206,212,218));
+                    border-bottom: var(--material-input-line-height, 1px) solid var(--material-input-border-color, rgb(206,212,218));
                     box-shadow: none;
                 }
                 .material-input__container.invalid .material-input__input{
@@ -131,7 +131,7 @@ class MaterialInput extends HTMLElement {
                 }
                 .material-input__bar::before, .material-input__bar::after {
                     content:'';
-                    height: var(--material-input-highlight-line-width, 2px);
+                    height: var(--material-input-highlight-line-height, 2px);
                     width:0;
                     bottom:0;
                     position:absolute;
@@ -235,8 +235,6 @@ class MaterialInput extends HTMLElement {
         var callbacks = {
             'valid': this._setValid,
             'value': this._setValue,
-            // 'timeout': this._timeout,
-            // 'attached': this._attached
         };
         // call callback if it exists
         if(callbacks.hasOwnProperty(attrName)) {
@@ -246,6 +244,13 @@ class MaterialInput extends HTMLElement {
             // if other attributes are updated, transfer updates to hidden input field
             this._transferAttribute(attrName, newVal);
         }
+    }
+    /**
+     * set the custom validity of the input
+     */
+    setCustomValidity(msg){
+        this.$input.setCustomValidity(msg);
+        this.$hiddenInput.setCustomValidity(msg)
     }
     /**
      * set value
