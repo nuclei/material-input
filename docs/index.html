@@ -13,11 +13,18 @@
                 font-family: sans-serif;
             }
             material-input{
-                color: rgb(95,61,196);
                 margin: 15px 0;
             }
             material-input[name=name], material-input[name=lastname]{
                 font-size: 26px;
+                --material-input-text-color: orange;
+                --material-input-placeholder-color: blue;
+                --material-input-highlight-color: indigo;
+                --material-input-invalid-color: red;
+                --material-input-valid-color: green;
+                --material-input-border-color: orange;
+                --material-input-line-width: 3px;
+                --material-input-highlight-line-width: 8px;
             }
             material-input[name=phone]{
                 width: 200px;
@@ -43,11 +50,12 @@
             <div>Material-input</div>
         </nav>
         <form action="https://httpbin.org/get" method="get">
-            <material-input name="name"></material-input>
-            <material-input name="lastname" label="Lastname" placeholder="Your lastname"></material-input>
+            <material-input name="name" label="name"></material-input>
+            <material-input name="email" label="Email" placeholder="Your Email" type="email"></material-input>
             <material-input name="password" type="password" placeholder="Placeholder"></material-input>
-            <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="ähh" invalid></material-input>
-            <material-input name="address" label="Address" placeholder="Your Address" value="ähh" valid></material-input>
+            <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="ähh"></material-input>
+            <material-input name="address" label="Address" value="ähh"></material-input>
+            <input typ="text">
             <button type="submit">Submit</button>
         </form>
     </body>
