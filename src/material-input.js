@@ -1,14 +1,5 @@
 'use strict';
-// define attributes that are not supposed to be transferred
-// const attributesExceptions = [
-//     'name',
-//     'label',
-//     'tabindex',
-//     'placeholder',
-//     'autofocus',
-//     'autocomplete',
-//     'autovalidate'
-// ];
+
 class MaterialInput extends HTMLElement {
 
     constructor() {
