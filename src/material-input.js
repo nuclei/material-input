@@ -1,5 +1,14 @@
 'use strict';
-
+// define attributes that are not supposed to be transferred
+// const attributesExceptions = [
+//     'name',
+//     'label',
+//     'tabindex',
+//     'placeholder',
+//     'autofocus',
+//     'autocomplete',
+//     'autovalidate'
+// ];
 class MaterialInput extends HTMLElement {
 
     constructor() {
@@ -163,64 +172,37 @@ class MaterialInput extends HTMLElement {
                 <div class="material-input__message"></div>
             </div>
         `;
+        this.attributesExceptions = [
+            'name',
+            'label',
+            'tabindex',
+            'placeholder',
+            'autofocus',
+            'autocomplete',
+            'autovalidate'
+        ];
         // set tab index to make element focussable
         this.setAttribute('tabindex',0);
         // shim shadowDOM styling
         if(WebComponents !== undefined && WebComponents.flags.shadow === true){
             WebComponents.ShadowCSS.shimStyling( this.shadowRoot, 'material-input' )
         }
-        // define attributes that are not supposed to be transferred
-        this.attributesExpections = [
-            'name',
-            'label',
-            'tabindex',
-            'placeholder',
-            'autofocus',
-            'autocomplete'
-        ];
         // add hidden input
         this.insertAdjacentHTML('afterend','<input tabindex="-1" style="pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: '+(this.offsetTop + this.offsetHeight)+'px; left: '+this.offsetLeft+'px;" name="'+this.getAttribute('name')+'"/>');
         this.$hiddenInput = document.querySelector('input[name='+this.getAttribute('name')+']');
-        // initialize attributes
-        this.label = this.getAttribute('label') || null;
-        this.placeholder = this.getAttribute('placeholder') || null;
         // elements
         this.$container = this.shadowRoot.querySelector('.material-input__container');
         this.$input = this.$container.querySelector('.material-input__input');
         this.$label = this.$container.querySelector('.material-input__label');
         this.$message = this.$container.querySelector('.material-input__message');
-
-        this.$hiddenInput.addEventListener('invalid', function(){
-            this._setValid(false);
-            this.$input.addEventListener('keydown', function(){
-                if(this.$input.validity.valid){
-                    this._setValid(true);
-                }
-            }.bind(this));
-
-        }.bind(this));
-
-        this.$input.addEventListener('keydown', function(){
-            this._value(this.$input.value);
-        }.bind(this));
-
-        this.$input.addEventListener('blur', function(){
-            this._value(this.$input.value);
-            // check if is valid
-            if(this.$input.value !== '' && (this.$input.validity.valid === true || this.$input.validity.valid === false)){
-                this._setValid(this.$input.validity.valid);
-            }
-        }.bind(this));
-
-        this.addEventListener('focus', function(){
-            this.$input.focus();
-        });
-
+        // add events
+        this._addEvents();
+        // transfer attribtues to input & hiddenInput
         this._transferAttributes();
-
+        // set value, label, etc.
         this._setValue(this.getAttribute('value'));
-        this._label(this.label);
-        this._placeholder(this.placeholder);
+        this._setLabel(this.getAttribute('label'));
+        this._setPlaceholder(this.getAttribute('placeholder'));
         this._setValid();
         // remove no-animation loading class
         setTimeout(function(){
@@ -235,6 +217,8 @@ class MaterialInput extends HTMLElement {
         var callbacks = {
             'valid': this._setValid,
             'value': this._setValue,
+            'label': this._setLabel,
+            'placeholder': this._setPlaceholder
         };
         // call callback if it exists
         if(callbacks.hasOwnProperty(attrName)) {
@@ -242,7 +226,7 @@ class MaterialInput extends HTMLElement {
         }
         else{
             // if other attributes are updated, transfer updates to hidden input field
-            this._transferAttribute(attrName, newVal);
+            this._transferAttribute(attrName, newVal, this.attributesExceptions);
         }
     }
     /**
@@ -251,6 +235,40 @@ class MaterialInput extends HTMLElement {
     setCustomValidity(msg){
         this.$input.setCustomValidity(msg);
         this.$hiddenInput.setCustomValidity(msg)
+    }
+    /**
+     * add events for all items
+     */
+    _addEvents(){
+        // on focuse pass to input
+        this.addEventListener('focus', function(){
+            this.$input.focus();
+        });
+        // set validation status when hiddenInput is invalid
+        this.$hiddenInput.addEventListener('invalid', function(){
+            this._setValid(false);
+        }.bind(this));
+        // pass on value when user enters content
+        this.$input.addEventListener('keydown', function(){
+            this._value(this.$input.value);
+        }.bind(this));
+        // pass in value and validate when user exits input field
+        this.$input.addEventListener('blur', function(){
+            this._value(this.$input.value);
+            // check if is valid
+            if(this.$input.value !== '' && (this.$input.validity.valid === true || this.$input.validity.valid === false)){
+                this._setValid(this.$input.validity.valid);
+            }
+        }.bind(this));
+        // if autovalidate is set to true, validate on key event
+        if(this.hasAttribute('autovalidate') && String(this.getAttribute('autovalidate')) !== 'false'){
+            this.$input.addEventListener('keydown', function(){
+                // check if is valid
+                if(this.$input.value !== '' && (this.$input.validity.valid === true)){
+                    this._setValid(true);
+                }
+            }.bind(this));
+        }
     }
     /**
      * set value
@@ -287,15 +305,15 @@ class MaterialInput extends HTMLElement {
     _transferAttributes(){
         for(var key of Object.keys(this.attributes)){
             if (this.attributes.hasOwnProperty(key)) {
-                this._transferAttribute(this.attributes[key].name, this.attributes[key].value);
+                this._transferAttribute(this.attributes[key].name, this.attributes[key].value, this.attributesExceptions);
             }
         }
     }
     /**
      * transfer attribute to input
      */
-    _transferAttribute(attrName, val){
-        if(this.attributesExpections.indexOf(attrName) === -1){
+    _transferAttribute(attrName, val, attributesExceptions){
+        if(attributesExceptions.indexOf(attrName) === -1){
             this.$hiddenInput.setAttribute(attrName,val);
             this.$input.setAttribute(attrName,val);
         }
@@ -313,20 +331,23 @@ class MaterialInput extends HTMLElement {
     /**
      * add label to material-input
      */
-    _label(label){
-        this.$label.innerHTML = label;
+    _setLabel(label){
+        if(label !== undefined && label !== null){
+            return this.$label.innerHTML = label;
+        }
+        this.$label.innerHTML = '';
     }
     /**
      * set placeholder and add label-always-floats class
      */
-    _placeholder(placeholder){
-        if(placeholder !== null){
+    _setPlaceholder(placeholder){
+        if(placeholder !== null && placeholder !== undefined){
             this.$input.setAttribute('placeholder', placeholder);
-            this._toggle(this.$container, 'label-always-floats', this.placeholder !== null);
+            this.$container.classList.add('label-always-floats');
+            return;
         }
-        else{
-            this.$input.removeAttribute('placeholder');
-        }
+        this.$input.removeAttribute('placeholder');
+        this.$container.classList.remove('label-always-floats');
     }
     /**
      * since classList.toggle with a second param is not supported in IE11 and below

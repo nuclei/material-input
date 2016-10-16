@@ -4,7 +4,17 @@
         <meta charset="utf-8">
         <title>Material-input</title>
         <script src="webcomponentsjs/webcomponents.js"></script>
+        <script src="include.js/include-min.js"></script>
         <script src="../src/material-input.js"></script>
+        <script type="text/javascript">
+        try {
+            document.registerElement('material-input');
+            include(['https://rawgit.com/nuclei/material-input/master/dist/material-input.js'], function (indexOfJquery, amdModule) {});
+            console.log('File: https://rawgit.com/nuclei/material-input/master/dist/material-input.js is used.');
+        } catch(e) {
+            console.log('File: ../src/material-input.js is used.');
+        }
+        </script>
         <!-- loading twice only so that the demo works online on github -->
         <!-- <script src="https://rawgit.com/nuclei/material-input/master/dist/material-input.js"></script> -->
         <style media="screen">
@@ -50,8 +60,8 @@
             <div>Material-input</div>
         </nav>
         <form action="https://httpbin.org/get" method="get">
-            <material-input name="name" label="name"></material-input>
-            <material-input name="email" label="Email" placeholder="Your Email" type="email"></material-input>
+            <material-input name="name" label="name" autovalidate></material-input>
+            <material-input name="email" label="Email" placeholder="Your Email" type="email" autovalidate></material-input>
             <material-input name="password" type="password" placeholder="Placeholder"></material-input>
             <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="ähh"></material-input>
             <material-input name="address" label="Address" value="ähh"></material-input>
@@ -60,7 +70,17 @@
         </form>
     </body>
     <script type="text/javascript">
-        console.log(document.querySelector('[name=phone]'));
-        document.querySelector('[name=phone]').setCustomValidity('thats not cool');
+    window.ready = function(fn) {
+        if (document.readyState != 'loading'){
+            fn();
+        } else {
+            document.addEventListener('DOMContentLoaded', fn);
+        }
+    };
+
+    ready(function(){
+        var input = document.querySelector('[name=phone]');
+        input.setCustomValidity('thats not cool');
+    });
     </script>
 </html>

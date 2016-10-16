@@ -9,8 +9,8 @@ https://nuclei.github.io/material-input/index.html
 
 ## Installation
 Not released yet. Feel free to test it an contribute.
-```
-# npm install --save material-input
+```bash
+npm install --save material-input
 ```
 
 You need the [webcomponents-lite polyfill](https://github.com/webcomponents/webcomponentsjs).
@@ -59,13 +59,16 @@ document.querySelector('material-input.animal').setAttribute('value','cat');
 ```
 
 ### Validation
-Validation works just like with any default `<input>` element. Add a `required` or set the `type` to `email` and you will get the browsers validation notifications.
+Validation works just like with any default `<input>` element. Add a `required` or set the `type` to `email` and you will get the browsers validation notifications. Additionally the `material-input` will have a `valid` or `invalid` style.
 
 Additionally it is possible to explicitly set a field to be `invalid` by using the default `setCustomValidity` method on the `material-input`. You can read more about the [setCustomValidity feature on MDN](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation#Controlling_the_text_of_constraints_violation).
 
 ```javascript
 document.querySelector('material-input.customValidatedItem').setCustomValidity('This is not valid.');
 ```
+
+#### Autovalidate
+When adding the `autovalidate` attribute to the `material-input`, the field will be validated on every `keydown` event. However, this means a field with no validation rules will always be valid and receive the `valid` immediately.
 
 ## Custom styling
 Apart from basic styling on the `material-input` like `margins` or the `font-size` you can use the following `css properties` to for custom styling.
