@@ -201,6 +201,7 @@ class MaterialInput extends HTMLElement {
         this._transferAttributes();
         // set value, label, etc.
         this._setValue(this.getAttribute('value'));
+        this.$input.value = this.value;
         this._setLabel(this.getAttribute('label'));
         this._setPlaceholder(this.getAttribute('placeholder'));
         this._setValid();
@@ -324,7 +325,6 @@ class MaterialInput extends HTMLElement {
     _value(val){
         // set value of hidden input for form submission
         this.$hiddenInput.value = val;
-        this.$input.value = val;
         // set state depending on value
         this._toggle(this.$container, 'is-empty', val === '');
     }
