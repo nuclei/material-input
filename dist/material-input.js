@@ -1,14 +1,4 @@
 'use strict';
-// define attributes that are not supposed to be transferred
-// const attributesExceptions = [
-//     'name',
-//     'label',
-//     'tabindex',
-//     'placeholder',
-//     'autofocus',
-//     'autocomplete',
-//     'autovalidate'
-// ];
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -69,7 +59,7 @@ var MaterialInput = function (_HTMLElement) {
             this.$input.value = this.value;
             this._setLabel(this.getAttribute('label'));
             this._setPlaceholder(this.getAttribute('placeholder'));
-            this._setValid();
+            this._checkValidity();
             // remove no-animation loading class
             setTimeout(function () {
                 this.$container.classList.remove('no-animation');
@@ -130,18 +120,34 @@ var MaterialInput = function (_HTMLElement) {
             this.$input.addEventListener('blur', function () {
                 this._value(this.$input.value);
                 // check if is valid
-                if (this.$input.value !== '' && (this.$input.validity.valid === true || this.$input.validity.valid === false)) {
-                    this._setValid(this.$input.validity.valid);
-                }
+                this._checkValidity();
             }.bind(this));
             // if autovalidate is set to true, validate on key event
             if (this.hasAttribute('autovalidate') && String(this.getAttribute('autovalidate')) !== 'false') {
+                this.$input.addEventListener('keydown', function () {
+                    // check if is valid
+                    this._checkValidity();
+                }.bind(this));
+            } else if (this.$input.validity.valid === false) {
                 this.$input.addEventListener('keydown', function () {
                     // check if is valid
                     if (this.$input.value !== '' && this.$input.validity.valid === true) {
                         this._setValid(true);
                     }
                 }.bind(this));
+            }
+        }
+        /**
+         * check validity
+         */
+
+    }, {
+        key: '_checkValidity',
+        value: function _checkValidity() {
+            if (this.$input.value !== '' && (this.$input.validity.valid === true || this.$input.validity.valid === false)) {
+                this._setValid(this.$input.validity.valid);
+            } else {
+                this._setValid(undefined);
             }
         }
         /**
@@ -163,19 +169,19 @@ var MaterialInput = function (_HTMLElement) {
             var validity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
 
             // valid is not set
-            if (!this.hasAttribute('valid')) {
+            if (validity === undefined) {
                 this.valid = undefined;
                 this.$container.classList.remove('valid');
                 this.$container.classList.remove('invalid');
             }
             // valid is true
-            if (this.getAttribute('valid') === 'true' || this.getAttribute('valid') === true || validity === true || validity === 'true') {
+            if (validity === true) {
                 this.valid = true;
                 this.$container.classList.add('valid');
                 this.$container.classList.remove('invalid');
             }
             // valid is false
-            if (this.getAttribute('valid') === 'false' || this.getAttribute('valid') === false || validity === false || validity === 'false') {
+            if (validity === false) {
                 this.valid = false;
                 this.$container.classList.add('invalid');
                 this.$container.classList.remove('valid');

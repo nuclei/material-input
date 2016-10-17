@@ -1,3 +1,0 @@
-include(function(){
-    return true;
-})

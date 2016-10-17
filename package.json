@@ -31,7 +31,6 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-sourcemaps": "^1.6.0",
-    "include.js": "^0.1.2",
     "web-component-tester": "^4.3.5"
   },
   "dependencies": {}

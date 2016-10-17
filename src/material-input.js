@@ -195,7 +195,7 @@ class MaterialInput extends HTMLElement {
         this.$input.value = this.value;
         this._setLabel(this.getAttribute('label'));
         this._setPlaceholder(this.getAttribute('placeholder'));
-        this._setValid();
+        this._checkValidity();
         // remove no-animation loading class
         setTimeout(function(){
             this.$container.classList.remove('no-animation');
@@ -248,18 +248,31 @@ class MaterialInput extends HTMLElement {
         this.$input.addEventListener('blur', function(){
             this._value(this.$input.value);
             // check if is valid
-            if(this.$input.value !== '' && (this.$input.validity.valid === true || this.$input.validity.valid === false)){
-                this._setValid(this.$input.validity.valid);
-            }
+            this._checkValidity();
         }.bind(this));
         // if autovalidate is set to true, validate on key event
         if(this.hasAttribute('autovalidate') && String(this.getAttribute('autovalidate')) !== 'false'){
             this.$input.addEventListener('keydown', function(){
                 // check if is valid
-                if(this.$input.value !== '' && (this.$input.validity.valid === true)){
+                this._checkValidity();
+            }.bind(this));
+        } else if(this.$input.validity.valid === false) {
+            this.$input.addEventListener('keydown', function(){
+                // check if is valid
+                if(this.$input.value !== '' && this.$input.validity.valid === true){
                     this._setValid(true);
                 }
             }.bind(this));
+        }
+    }
+    /**
+     * check validity
+     */
+    _checkValidity(){
+        if(this.$input.value !== '' && (this.$input.validity.valid === true || this.$input.validity.valid === false) ){
+            this._setValid(this.$input.validity.valid);
+        }else{
+            this._setValid(undefined);
         }
     }
     /**
@@ -273,19 +286,19 @@ class MaterialInput extends HTMLElement {
      */
     _setValid(validity = undefined){
         // valid is not set
-        if(!this.hasAttribute('valid') ){
+        if(validity === undefined){
             this.valid = undefined;
             this.$container.classList.remove('valid');
             this.$container.classList.remove('invalid');
         }
         // valid is true
-        if(this.getAttribute('valid') === 'true' || this.getAttribute('valid') === true || validity === true || validity === 'true'){
+        if(validity === true){
             this.valid = true;
             this.$container.classList.add('valid');
             this.$container.classList.remove('invalid');
         }
         // valid is false
-        if(this.getAttribute('valid') === 'false' || this.getAttribute('valid') === false || validity === false || validity === 'false') {
+        if(validity === false) {
             this.valid = false;
             this.$container.classList.add('invalid');
             this.$container.classList.remove('valid');

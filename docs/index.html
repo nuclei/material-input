@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <title>Material-input</title>
         <script src="webcomponentsjs/webcomponents.js"></script>
-        <script src="include.js/include-min.js"></script>
         <script src="../src/material-input.js"></script>
         <!-- this is only for the demos -->
         <script src="https://rawgit.com/nuclei/material-input/master/dist/material-input.js"></script>
@@ -53,7 +52,7 @@
         <form action="https://httpbin.org/get" method="get">
             <material-input name="name" label="name" autovalidate></material-input>
             <material-input name="email" label="Email" placeholder="Your Email" type="email" autovalidate></material-input>
-            <material-input name="password" type="password" placeholder="Placeholder"></material-input>
+            <material-input name="password" type="password" placeholder="Placeholder" pattern=".{8,}"></material-input>
             <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="ähh"></material-input>
             <material-input name="address" label="Address" value="ähh"></material-input>
             <button type="submit">Submit</button>
