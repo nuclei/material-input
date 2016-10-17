@@ -1,14 +1,25 @@
 # Material-input
-An easy drop-in material design vanilla custom input element. No framework dependencies, small footprint.
+An easy drop-in material design vanilla custom input element. HTML form ready, no framework dependencies, small footprint.
 
-[![npm](https://img.shields.io/npm/v/material-input.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/material-input) [![npm](https://img.shields.io/npm/dt/material-input.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/material-input) [![npm](https://img.shields.io/npm/l/material-input.svg?maxAge=2592000?style=flat-square)](https://github.com/nuclei/material-input/blob/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/nuclei/material-input/master.svg?style=flat-square)](https://travis-ci.org/nuclei/material-input) [![npm](https://img.shields.io/npm/v/material-input.svg?style=flat-square)](https://www.npmjs.com/package/material-input) [![npm](https://img.shields.io/npm/dt/material-input.svg?style=flat-square)](https://www.npmjs.com/package/material-input) [![npm](https://img.shields.io/npm/l/material-input.svg?style=flat-square)](https://github.com/nuclei/material-input/blob/master/LICENSE)
 
 ## Demo
+[![Material Inputs](https://cloud.githubusercontent.com/assets/813754/19432757/350079e4-945e-11e6-9593-e2174285c435.png)](https://nuclei.github.io/material-input/index.html)
 
-https://nuclei.github.io/material-input/index.html
+
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="docs/webcomponentsjs/webcomponents.js"></script>
+    <script src="src/material-input.js"></script>
+    <material-input name="form" label="Email address" style="font-family: sans-serif;"></material-input>
+  </template>
+</custom-element-demo>
+```
+-->
 
 ## Installation
-Not released yet. Feel free to test it an contribute.
 ```bash
 npm install --save material-input
 ```

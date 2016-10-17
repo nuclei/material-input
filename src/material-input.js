@@ -18,6 +18,7 @@ class MaterialInput extends HTMLElement {
             set: function(newValue){
                 value = !newValue ? '' : newValue;
                 this._value(value);
+                this.$input.value = value;
             }
         });
 
@@ -40,7 +41,7 @@ class MaterialInput extends HTMLElement {
                     background-color: transparent;
                     font-size: 1em;
                     color: var(--material-input-text-color, black);
-                    padding: 1em 1em 1em 10px;
+                    padding: 1.4em 1em .6em 10px;
                     display: block;
                     width: 100%;
                     border: none;
@@ -157,6 +158,7 @@ class MaterialInput extends HTMLElement {
                 }
             </style>
             <div class="material-input__container no-animation${this.value == '' ? ' is-empty' : ''}">
+                <content></content>
                 <input class="material-input__input" tabindex="-1" />
                 <label class="material-input__label"></label>
                 <div class="material-input__bar"></div>
@@ -164,7 +166,9 @@ class MaterialInput extends HTMLElement {
             </div>
         `;
         this.attributesExceptions = [
-            'name',
+            // 'name',
+            'id',
+            'style',
             'label',
             'tabindex',
             'placeholder',
@@ -179,13 +183,14 @@ class MaterialInput extends HTMLElement {
             WebComponents.ShadowCSS.shimStyling( this.shadowRoot, 'material-input' )
         }
         // add hidden input
-        this.insertAdjacentHTML('afterend','<input tabindex="-1" style="pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: '+(this.offsetTop + this.offsetHeight)+'px; left: '+this.offsetLeft+'px;" name="'+this.getAttribute('name')+'"/>');
-        this.$hiddenInput = document.querySelector('input[name='+this.getAttribute('name')+']');
+        this.insertAdjacentHTML('afterend','<input tabindex="-1" class="material-input__hidden-input" style="pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: '+(this.offsetTop + this.offsetHeight)+'px; left: '+this.offsetLeft+'px;" name="'+this.getAttribute('name')+'"/>');
+        this.$hiddenInput = document.querySelector('.material-input__hidden-input[name='+this.getAttribute('name')+']');
         // elements
         this.$container = this.shadowRoot.querySelector('.material-input__container');
         this.$input = this.$container.querySelector('.material-input__input');
         this.$label = this.$container.querySelector('.material-input__label');
         this.$message = this.$container.querySelector('.material-input__message');
+        this.$form = this._getParentForm(this);
         // add events
         this._addEvents();
         // transfer attribtues to input & hiddenInput
@@ -195,7 +200,7 @@ class MaterialInput extends HTMLElement {
         this.$input.value = this.value;
         this._setLabel(this.getAttribute('label'));
         this._setPlaceholder(this.getAttribute('placeholder'));
-        this._checkValidity();
+
         // remove no-animation loading class
         setTimeout(function(){
             this.$container.classList.remove('no-animation');
@@ -207,10 +212,10 @@ class MaterialInput extends HTMLElement {
     attributeChangedCallback(attrName, oldVal, newVal) {
         // define callbacks
         var callbacks = {
-            'valid': this._setValid,
             'value': this._setValue,
             'label': this._setLabel,
-            'placeholder': this._setPlaceholder
+            'placeholder': this._setPlaceholder,
+            'name': this._setName,
         };
         // call callback if it exists
         if(callbacks.hasOwnProperty(attrName)) {
@@ -241,7 +246,16 @@ class MaterialInput extends HTMLElement {
             this._setValid(false);
         }.bind(this));
         // pass on value when user enters content
-        this.$input.addEventListener('keydown', function(){
+        this.$input.addEventListener('keydown', function(e){
+            if(e.keyCode === 13){
+                if(this.$form.checkValidity()){
+                    this.$form.submit();
+                }else if(this.$form.querySelector('[type="submit"]') !== null){
+                    // needed to trigger validation
+                    this.$form.querySelector('[type="submit"]').click();
+                }
+                return;
+            }
             this._value(this.$input.value);
         }.bind(this));
         // pass in value and validate when user exits input field
@@ -266,6 +280,18 @@ class MaterialInput extends HTMLElement {
         }
     }
     /**
+     * get parent form
+     */
+    _getParentForm(current){
+        current = current.parentElement;
+        // return form
+        if( current.constructor === HTMLFormElement ) return current;
+        // return false on body
+        if(current.constructor === HTMLBodyElement) return false;
+        // dig one level deeper
+        return this._getParentForm(current);
+    }
+    /**
      * check validity
      */
     _checkValidity(){
@@ -280,6 +306,12 @@ class MaterialInput extends HTMLElement {
      */
     _setValue(newValue){
         this.value = newValue;
+    }
+    /**
+     * set name
+     */
+    _setName(newName){
+        this.$hiddenInput.setAttribute('name', newName);
     }
     /**
      * set field to valid or invalid
@@ -329,6 +361,7 @@ class MaterialInput extends HTMLElement {
     _value(val){
         // set value of hidden input for form submission
         this.$hiddenInput.value = val;
+        this.setAttribute('value',val);
         // set state depending on value
         this._toggle(this.$container, 'is-empty', val === '');
     }

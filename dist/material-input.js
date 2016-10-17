@@ -31,11 +31,14 @@ var MaterialInput = function (_HTMLElement) {
                 set: function set(newValue) {
                     value = !newValue ? '' : newValue;
                     this._value(value);
+                    this.$input.value = value;
                 }
             });
 
-            this.createShadowRoot().innerHTML = '\n            <style>\n                :host{\n                    display: block;\n                    position: relative;\n                    background: transparent;\n                    margin: .5em 0;\n                }\n                .material-input__container{\n                    width: inherit;\n                    display: block;\n                    position: relative;\n                }\n                .material-input__input{\n                    box-sizing: border-box;\n                    position: relative;\n                    background-color: transparent;\n                    font-size: 1em;\n                    color: var(--material-input-text-color, black);\n                    padding: 1em 1em 1em 10px;\n                    display: block;\n                    width: 100%;\n                    border: none;\n                    border-bottom: var(--material-input-line-height, 1px) solid var(--material-input-border-color, rgb(206,212,218));\n                    box-shadow: none;\n                }\n                .material-input__container.invalid .material-input__input{\n                    border-bottom-color: var(--material-input-invalid-color, rgb(224,49,49));\n                }\n                .material-input__container.valid .material-input__input{\n                    border-bottom-color: var(--material-input-valid-color, rgb(47,158,68));\n                }\n                .material-input__input:focus{\n                    outline: none;\n                }\n                /* placeholder and placeholder fade on focus */\n                .material-input__input::-webkit-input-placeholder {\n                    color: var(--material-input-placeholder-color, rgb(134,142,150));\n                    opacity: 1;\n                }\n                .material-input__input:focus::-webkit-input-placeholder {\n                    opacity: .5;\n                    transition: opacity .35s ease;\n                }\n                .material-input__input::-moz-placeholder {\n                    color: var(--material-input-placeholder-color, rgb(134,142,150));\n                    opacity: 1;\n                }\n                .material-input__input:focus::-moz-placeholder {\n                    opacity: .5;\n                    transition: opacity .35s ease;\n                }\n                .material-input__input:-ms-input-placeholder {\n                    color: var(--material-input-placeholder-color, rgb(134,142,150));\n                    opacity: 1;\n                }\n                .material-input__input:-ms-input-placeholder {\n                    opacity: .5;\n                    transition: opacity .35s ease;\n                }\n                /* Labels */\n                .material-input__label{\n                    color: rgb(134,142,150);\n                    font-size: inherit;\n                    pointer-events: none;\n                    position: absolute;\n                    left: 10px;\n                    bottom: 1em;\n                    transition: 0.2s ease all;\n                }\n                .material-input__container.no-animation .material-input__label,\n                .material-input__container.label-always-floats .material-input__label{\n                    transition: 0s ease all;\n                }\n                .material-input__container.is-empty .material-input__input[placeholder] ~ .material-input__label{\n                    color: var(--material-input-text-color, black);\n                }\n                /* active state */\n                .material-input__input:focus ~ .material-input__label,\n                .material-input__container:not(.is-empty) .material-input__label,\n                .material-input__container.label-always-floats .material-input__label{\n                    bottom: 3em;\n                    font-size: .75em;\n                }\n                .material-input__input:focus ~ .material-input__label,\n                .material-input__container.is-empty .material-input__input[placeholder]:focus ~ .material-input__label{\n                    color: var(--material-input-highlight-color, rgb(54,79,199));\n                }\n                /* errror state */\n                .material-input__container.invalid.label-always-floats .material-input__label,\n                .material-input__container.invalid .material-input__input:focus ~ .material-input__label,\n                .material-input__container.is-empty.invalid .material-input__input[placeholder]:focus ~ .material-input__label,\n                .material-input__container.is-empty.invalid .material-input__input[placeholder] ~ .material-input__label{\n                    color: var(--material-input-invalid-color, rgb(224,49,49));\n                }\n                /* valid state */\n                .material-input__container.valid.label-always-floats .material-input__label,\n                .material-input__container.valid .material-input__input:focus ~ .material-input__label,\n                .material-input__container.is-empty.valid .material-input__input[placeholder]:focus ~ .material-input__label,\n                .material-input__container.is-empty.valid .material-input__input[placeholder] ~ .material-input__label{\n                    color: var(--material-input-valid-color, rgb(47,158,68));\n                }\n                /* bar */\n                .material-input__bar{\n                    position:relative;\n                    display:block;\n                    width:100%;\n                }\n                .material-input__bar::before, .material-input__bar::after {\n                    content:\'\';\n                    height: var(--material-input-highlight-line-height, 2px);\n                    width:0;\n                    bottom:0;\n                    position:absolute;\n                    background: var(--material-input-highlight-color, rgb(54,79,199));\n                    transition:0.2s ease all;\n                }\n                .material-input__container.invalid .material-input__bar::before,\n                .material-input__container.invalid .material-input__bar::after{\n                    background: var(--material-input-invalid-color, rgb(224,49,49));\n                }\n                .material-input__container.valid .material-input__bar::before,\n                .material-input__container.valid .material-input__bar::after{\n                    background: var(--material-input-valid-color, rgb(47,158,68));\n                }\n                .material-input__bar::before {\n                    left:50%;\n                }\n                .material-input__bar::after {\n                    right:50%;\n                }\n                .material-input__input:focus ~ .material-input__bar:before, .material-input__input:focus ~ .material-input__bar:after{\n                    width:50%;\n                }\n            </style>\n            <div class="material-input__container no-animation' + (this.value == '' ? ' is-empty' : '') + '">\n                <input class="material-input__input" tabindex="-1" />\n                <label class="material-input__label"></label>\n                <div class="material-input__bar"></div>\n                <div class="material-input__message"></div>\n            </div>\n        ';
-            this.attributesExceptions = ['name', 'label', 'tabindex', 'placeholder', 'autofocus', 'autocomplete', 'autovalidate'];
+            this.createShadowRoot().innerHTML = '\n            <style>\n                :host{\n                    display: block;\n                    position: relative;\n                    background: transparent;\n                    margin: .5em 0;\n                }\n                .material-input__container{\n                    width: inherit;\n                    display: block;\n                    position: relative;\n                }\n                .material-input__input{\n                    box-sizing: border-box;\n                    position: relative;\n                    background-color: transparent;\n                    font-size: 1em;\n                    color: var(--material-input-text-color, black);\n                    padding: 1em 1em 1em 10px;\n                    display: block;\n                    width: 100%;\n                    border: none;\n                    border-bottom: var(--material-input-line-height, 1px) solid var(--material-input-border-color, rgb(206,212,218));\n                    box-shadow: none;\n                }\n                .material-input__container.invalid .material-input__input{\n                    border-bottom-color: var(--material-input-invalid-color, rgb(224,49,49));\n                }\n                .material-input__container.valid .material-input__input{\n                    border-bottom-color: var(--material-input-valid-color, rgb(47,158,68));\n                }\n                .material-input__input:focus{\n                    outline: none;\n                }\n                /* placeholder and placeholder fade on focus */\n                .material-input__input::-webkit-input-placeholder {\n                    color: var(--material-input-placeholder-color, rgb(134,142,150));\n                    opacity: 1;\n                }\n                .material-input__input:focus::-webkit-input-placeholder {\n                    opacity: .5;\n                    transition: opacity .35s ease;\n                }\n                .material-input__input::-moz-placeholder {\n                    color: var(--material-input-placeholder-color, rgb(134,142,150));\n                    opacity: 1;\n                }\n                .material-input__input:focus::-moz-placeholder {\n                    opacity: .5;\n                    transition: opacity .35s ease;\n                }\n                .material-input__input:-ms-input-placeholder {\n                    color: var(--material-input-placeholder-color, rgb(134,142,150));\n                    opacity: 1;\n                }\n                .material-input__input:-ms-input-placeholder {\n                    opacity: .5;\n                    transition: opacity .35s ease;\n                }\n                /* Labels */\n                .material-input__label{\n                    color: rgb(134,142,150);\n                    font-size: inherit;\n                    pointer-events: none;\n                    position: absolute;\n                    left: 10px;\n                    bottom: 1em;\n                    transition: 0.2s ease all;\n                }\n                .material-input__container.no-animation .material-input__label,\n                .material-input__container.label-always-floats .material-input__label{\n                    transition: 0s ease all;\n                }\n                .material-input__container.is-empty .material-input__input[placeholder] ~ .material-input__label{\n                    color: var(--material-input-text-color, black);\n                }\n                /* active state */\n                .material-input__input:focus ~ .material-input__label,\n                .material-input__container:not(.is-empty) .material-input__label,\n                .material-input__container.label-always-floats .material-input__label{\n                    bottom: 3em;\n                    font-size: .75em;\n                }\n                .material-input__input:focus ~ .material-input__label,\n                .material-input__container.is-empty .material-input__input[placeholder]:focus ~ .material-input__label{\n                    color: var(--material-input-highlight-color, rgb(54,79,199));\n                }\n                /* errror state */\n                .material-input__container.invalid.label-always-floats .material-input__label,\n                .material-input__container.invalid .material-input__input:focus ~ .material-input__label,\n                .material-input__container.is-empty.invalid .material-input__input[placeholder]:focus ~ .material-input__label,\n                .material-input__container.is-empty.invalid .material-input__input[placeholder] ~ .material-input__label{\n                    color: var(--material-input-invalid-color, rgb(224,49,49));\n                }\n                /* valid state */\n                .material-input__container.valid.label-always-floats .material-input__label,\n                .material-input__container.valid .material-input__input:focus ~ .material-input__label,\n                .material-input__container.is-empty.valid .material-input__input[placeholder]:focus ~ .material-input__label,\n                .material-input__container.is-empty.valid .material-input__input[placeholder] ~ .material-input__label{\n                    color: var(--material-input-valid-color, rgb(47,158,68));\n                }\n                /* bar */\n                .material-input__bar{\n                    position:relative;\n                    display:block;\n                    width:100%;\n                }\n                .material-input__bar::before, .material-input__bar::after {\n                    content:\'\';\n                    height: var(--material-input-highlight-line-height, 2px);\n                    width:0;\n                    bottom:0;\n                    position:absolute;\n                    background: var(--material-input-highlight-color, rgb(54,79,199));\n                    transition:0.2s ease all;\n                }\n                .material-input__container.invalid .material-input__bar::before,\n                .material-input__container.invalid .material-input__bar::after{\n                    background: var(--material-input-invalid-color, rgb(224,49,49));\n                }\n                .material-input__container.valid .material-input__bar::before,\n                .material-input__container.valid .material-input__bar::after{\n                    background: var(--material-input-valid-color, rgb(47,158,68));\n                }\n                .material-input__bar::before {\n                    left:50%;\n                }\n                .material-input__bar::after {\n                    right:50%;\n                }\n                .material-input__input:focus ~ .material-input__bar:before, .material-input__input:focus ~ .material-input__bar:after{\n                    width:50%;\n                }\n            </style>\n            <div class="material-input__container no-animation' + (this.value == '' ? ' is-empty' : '') + '">\n                <content></content>\n                <input class="material-input__input" tabindex="-1" />\n                <label class="material-input__label"></label>\n                <div class="material-input__bar"></div>\n                <div class="material-input__message"></div>\n            </div>\n        ';
+            this.attributesExceptions = [
+            // 'name',
+            'id', 'style', 'label', 'tabindex', 'placeholder', 'autofocus', 'autocomplete', 'autovalidate'];
             // set tab index to make element focussable
             this.setAttribute('tabindex', 0);
             // shim shadowDOM styling
@@ -43,13 +46,14 @@ var MaterialInput = function (_HTMLElement) {
                 WebComponents.ShadowCSS.shimStyling(this.shadowRoot, 'material-input');
             }
             // add hidden input
-            this.insertAdjacentHTML('afterend', '<input tabindex="-1" style="pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: ' + (this.offsetTop + this.offsetHeight) + 'px; left: ' + this.offsetLeft + 'px;" name="' + this.getAttribute('name') + '"/>');
-            this.$hiddenInput = document.querySelector('input[name=' + this.getAttribute('name') + ']');
+            this.insertAdjacentHTML('afterend', '<input tabindex="-1" class="material-input__hidden-input" style="pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: ' + (this.offsetTop + this.offsetHeight) + 'px; left: ' + this.offsetLeft + 'px;" name="' + this.getAttribute('name') + '"/>');
+            this.$hiddenInput = document.querySelector('.material-input__hidden-input[name=' + this.getAttribute('name') + ']');
             // elements
             this.$container = this.shadowRoot.querySelector('.material-input__container');
             this.$input = this.$container.querySelector('.material-input__input');
             this.$label = this.$container.querySelector('.material-input__label');
             this.$message = this.$container.querySelector('.material-input__message');
+            this.$form = this._getParentForm(this);
             // add events
             this._addEvents();
             // transfer attribtues to input & hiddenInput
@@ -59,7 +63,7 @@ var MaterialInput = function (_HTMLElement) {
             this.$input.value = this.value;
             this._setLabel(this.getAttribute('label'));
             this._setPlaceholder(this.getAttribute('placeholder'));
-            this._checkValidity();
+
             // remove no-animation loading class
             setTimeout(function () {
                 this.$container.classList.remove('no-animation');
@@ -74,10 +78,10 @@ var MaterialInput = function (_HTMLElement) {
         value: function attributeChangedCallback(attrName, oldVal, newVal) {
             // define callbacks
             var callbacks = {
-                'valid': this._setValid,
                 'value': this._setValue,
                 'label': this._setLabel,
-                'placeholder': this._setPlaceholder
+                'placeholder': this._setPlaceholder,
+                'name': this._setName
             };
             // call callback if it exists
             if (callbacks.hasOwnProperty(attrName)) {
@@ -113,7 +117,16 @@ var MaterialInput = function (_HTMLElement) {
                 this._setValid(false);
             }.bind(this));
             // pass on value when user enters content
-            this.$input.addEventListener('keydown', function () {
+            this.$input.addEventListener('keydown', function (e) {
+                if (e.keyCode === 13) {
+                    if (this.$form.checkValidity()) {
+                        this.$form.submit();
+                    } else if (this.$form.querySelector('[type="submit"]') !== null) {
+                        // needed to trigger validation
+                        this.$form.querySelector('[type="submit"]').click();
+                    }
+                    return;
+                }
                 this._value(this.$input.value);
             }.bind(this));
             // pass in value and validate when user exits input field
@@ -138,6 +151,21 @@ var MaterialInput = function (_HTMLElement) {
             }
         }
         /**
+         * get parent form
+         */
+
+    }, {
+        key: '_getParentForm',
+        value: function _getParentForm(current) {
+            current = current.parentElement;
+            // return form
+            if (current.constructor === HTMLFormElement) return current;
+            // return false on body
+            if (current.constructor === HTMLBodyElement) return false;
+            // dig one level deeper
+            return this._getParentForm(current);
+        }
+        /**
          * check validity
          */
 
@@ -158,6 +186,15 @@ var MaterialInput = function (_HTMLElement) {
         key: '_setValue',
         value: function _setValue(newValue) {
             this.value = newValue;
+        }
+        /**
+         * set name
+         */
+
+    }, {
+        key: '_setName',
+        value: function _setName(newName) {
+            this.$hiddenInput.setAttribute('name', newName);
         }
         /**
          * set field to valid or invalid
@@ -242,6 +279,7 @@ var MaterialInput = function (_HTMLElement) {
         value: function _value(val) {
             // set value of hidden input for form submission
             this.$hiddenInput.value = val;
+            this.setAttribute('value', val);
             // set state depending on value
             this._toggle(this.$container, 'is-empty', val === '');
         }

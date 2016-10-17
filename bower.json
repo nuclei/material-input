@@ -1,0 +1,30 @@
+{
+  "name": "material-input",
+  "description": "An easy drop-in material-input solution as a custom element",
+  "main": "src/material-input.js",
+  "authors": [
+    "Lukas Oppermann"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "material-input",
+    "input",
+    "material",
+    "ui",
+    "web-components"
+  ],
+  "homepage": "https://github.com/nuclei/material-input",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^4.3.5",
+    "webcomponentsjs": "^0.7.22",
+    "polymer": "Polymer/polymer#^1.2.0"
+  }
+}

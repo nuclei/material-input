@@ -53,8 +53,8 @@
             <material-input name="name" label="name" autovalidate></material-input>
             <material-input name="email" label="Email" placeholder="Your Email" type="email" autovalidate></material-input>
             <material-input name="password" type="password" placeholder="Placeholder" pattern=".{8,}"></material-input>
-            <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="ähh"></material-input>
-            <material-input name="address" label="Address" value="ähh"></material-input>
+            <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="+49 12 345 678"></material-input>
+            <material-input name="address" label="Address" value="Baker Street"></material-input>
             <button type="submit">Submit</button>
         </form>
     </body>
@@ -69,7 +69,7 @@
 
     ready(function(){
         var input = document.querySelector('[name=phone]');
-        input.setCustomValidity('thats not cool');
+        // input.setCustomValidity('thats not cool');
     });
     </script>
 </html>

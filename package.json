@@ -7,7 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "./node_modules/web-component-tester/bin/wct"
+    "test": "./node_modules/.bin/wct --skip-selenium-install",
+    "travis": "./node_modules/.bin/wct ",
+    "cover": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test/*.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -28,10 +30,16 @@
   "homepage": "https://github.com/nuclei/material-input#readme",
   "devDependencies": {
     "babel-preset-latest": "^6.16.0",
+    "bower": "^1.7.9",
+    "coveralls": "^2.11.14",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-sourcemaps": "^1.6.0",
-    "web-component-tester": "^4.3.5"
+    "istanbul": "^0.4.5",
+    "mocha-istanbul": "^0.3.0",
+    "web-component-tester": "^4.3.5",
+    "web-component-tester-istanbul": "^0.10.0",
+    "webcomponents.js": "^0.7"
   },
   "dependencies": {}
 }
