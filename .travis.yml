@@ -1,17 +1,14 @@
-sudo: false
 language: node_js
-node_js:
-  - "node"
-before_install: npm install && bower install --force
-script: npm run travis
-# TODO(rictic): Uncomment the below when trying to get the integration tests
-# working on travis.
 sudo: required
 dist: trusty
 addons:
-  firefox: '46.0'
+  # firefox: '46.0'
   apt:
     sources:
       - google-chrome
     packages:
       - google-chrome-stable
+node_js:
+  - '6'
+before_script: npm install && bower install --force
+script: xvfb-run npm run travis

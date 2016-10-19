@@ -37,7 +37,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "istanbul": "^0.4.5",
     "mocha-istanbul": "^0.3.0",
-    "web-component-tester": "^4.3.5",
+    "web-component-tester": "^4",
     "web-component-tester-istanbul": "^0.10.0",
     "webcomponents.js": "^0.7"
   },

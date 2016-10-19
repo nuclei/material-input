@@ -29,6 +29,7 @@ class MaterialInput extends HTMLElement {
                     position: relative;
                     background: transparent;
                     margin: .5em 0;
+                    --material-input-accent-color: var(--accent-color, rgb(54,79,199));
                 }
                 .material-input__container{
                     width: inherit;
@@ -108,7 +109,7 @@ class MaterialInput extends HTMLElement {
                 }
                 .material-input__input:focus ~ .material-input__label,
                 .material-input__container.is-empty .material-input__input[placeholder]:focus ~ .material-input__label{
-                    color: var(--material-input-highlight-color, rgb(54,79,199));
+                    color: var(--material-input-highlight-color, --material-input-accent-color);
                 }
                 /* errror state */
                 .material-input__container.invalid.label-always-floats .material-input__label,
@@ -136,7 +137,7 @@ class MaterialInput extends HTMLElement {
                     width:0;
                     bottom:0;
                     position:absolute;
-                    background: var(--material-input-highlight-color, rgb(54,79,199));
+                    background: var(--material-input-highlight-color, --material-input-accent-color);
                     transition:0.2s ease all;
                 }
                 .material-input__container.invalid .material-input__bar::before,
@@ -155,6 +156,14 @@ class MaterialInput extends HTMLElement {
                 }
                 .material-input__input:focus ~ .material-input__bar:before, .material-input__input:focus ~ .material-input__bar:after{
                     width:50%;
+                }
+                .material-input__message{
+                    position: absolute;
+                    bottom: 0;
+                    transform: translateY(100%);
+                    font-size: 70%;
+                    color: var(--material-input-invalid-color, rgb(224,49,49));
+                    padding: .3rem 0 .5rem 10px;
                 }
             </style>
             <div class="material-input__container no-animation${this.value == '' ? ' is-empty' : ''}">
@@ -191,6 +200,8 @@ class MaterialInput extends HTMLElement {
         this.$label = this.$container.querySelector('.material-input__label');
         this.$message = this.$container.querySelector('.material-input__message');
         this.$form = this._getParentForm(this);
+        //
+        this.validity = this.hasAttribute('valid') ? true : this.hasAttribute('invalid') ? false : undefined;
         // add events
         this._addEvents();
         // transfer attribtues to input & hiddenInput
@@ -200,7 +211,8 @@ class MaterialInput extends HTMLElement {
         this.$input.value = this.value;
         this._setLabel(this.getAttribute('label'));
         this._setPlaceholder(this.getAttribute('placeholder'));
-
+        this._setValid(this.validity);
+        this._setMessage(this.getAttribute('message'));
         // remove no-animation loading class
         setTimeout(function(){
             this.$container.classList.remove('no-animation');
@@ -216,6 +228,7 @@ class MaterialInput extends HTMLElement {
             'label': this._setLabel,
             'placeholder': this._setPlaceholder,
             'name': this._setName,
+            'message': this._setMessage
         };
         // call callback if it exists
         if(callbacks.hasOwnProperty(attrName)) {
@@ -246,7 +259,7 @@ class MaterialInput extends HTMLElement {
             this._setValid(false);
         }.bind(this));
         // pass on value when user enters content
-        this.$input.addEventListener('keydown', function(e){
+        this.$input.addEventListener('keyup', function(e){
             if(e.keyCode === 13){
                 if(this.$form.checkValidity()){
                     this.$form.submit();
@@ -268,7 +281,7 @@ class MaterialInput extends HTMLElement {
         }.bind(this));
         // if autovalidate is set to true, validate on key event
         if(this.hasAttribute('autovalidate') && String(this.getAttribute('autovalidate')) !== 'false'){
-            this.$input.addEventListener('keydown', function(){
+            this.$input.addEventListener('keyup', function(){
                 // check if is valid
                 this._checkValidity();
             }.bind(this));
@@ -308,6 +321,13 @@ class MaterialInput extends HTMLElement {
      */
     _setValue(newValue){
         this.value = newValue;
+    }
+    /**
+     * set message
+     */
+    _setMessage(msg){
+        this.$message.innerHTML = msg;
+        this.$container.style.marginBottom = this.$message.offsetHeight+'px';
     }
     /**
      * set name

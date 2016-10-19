@@ -9,6 +9,7 @@
         <script src="https://rawgit.com/nuclei/material-input/master/dist/material-input.js"></script>
         <style media="screen">
             body{
+                --accent-color: red;
                 margin: 0;
                 font-family: sans-serif;
             }
@@ -50,11 +51,11 @@
             <div>Material-input</div>
         </nav>
         <form action="https://httpbin.org/get" method="get">
-            <material-input name="name" label="name" autovalidate></material-input>
+            <material-input name="name" label="name" invalid autovalidate required message="test"></material-input>
             <material-input name="email" label="Email" placeholder="Your Email" type="email"></material-input>
             <material-input name="password" type="password" placeholder="Placeholder" pattern=".{8,}"></material-input>
             <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="+49 12 345 678"></material-input>
-            <material-input name="address" label="Address" value="Baker Street"></material-input>
+            <material-input name="address" label="Address" value="Baker Street" valid></material-input>
             <button type="submit">Submit</button>
         </form>
     </body>
