@@ -166,7 +166,7 @@ class MaterialInput extends HTMLElement {
             </div>
         `;
         this.attributesExceptions = [
-            // 'name',
+            'name',
             'id',
             'style',
             'label',
@@ -261,8 +261,10 @@ class MaterialInput extends HTMLElement {
         // pass in value and validate when user exits input field
         this.$input.addEventListener('blur', function(){
             this._value(this.$input.value);
-            // check if is valid
-            this._checkValidity();
+            if(this.hasAttribute('autovalidate') && String(this.getAttribute('autovalidate')) !== 'false'){
+                // check if is valid
+                this._checkValidity();
+            }
         }.bind(this));
         // if autovalidate is set to true, validate on key event
         if(this.hasAttribute('autovalidate') && String(this.getAttribute('autovalidate')) !== 'false'){
@@ -270,10 +272,10 @@ class MaterialInput extends HTMLElement {
                 // check if is valid
                 this._checkValidity();
             }.bind(this));
-        } else if(this.$input.validity.valid === false) {
+        } else {
             this.$input.addEventListener('keydown', function(){
                 // check if is valid
-                if(this.$input.value !== '' && this.$input.validity.valid === true){
+                if(this.$container.classList.contains('invalid') && this.$input.value !== '' && this.$input.validity.valid === true){
                     this._setValid(true);
                 }
             }.bind(this));
