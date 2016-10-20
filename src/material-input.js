@@ -84,7 +84,7 @@ class MaterialInput extends HTMLElement {
                 }
                 /* Labels */
                 .material-input__label{
-                    color: rgb(134,142,150);
+                    color: var(--material-input-placeholder-color, rgb(134,142,150));
                     font-size: inherit;
                     pointer-events: none;
                     position: absolute;
