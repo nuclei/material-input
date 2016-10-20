@@ -51,11 +51,12 @@
             <div>Material-input</div>
         </nav>
         <form action="https://httpbin.org/get" method="get">
-            <material-input name="name" label="name" invalid autovalidate required message="test"></material-input>
+            <material-input name="name" label="name" autovalidate required></material-input>
+            <material-input name="username" label="Username" type="text" valid autovalidate required pattern=".{3,}"></material-input>
             <material-input name="email" label="Email" placeholder="Your Email" type="email"></material-input>
             <material-input name="password" type="password" placeholder="Placeholder" pattern=".{8,}"></material-input>
             <material-input name="phone" label="Phone Number" placeholder="Your Phone Number" value="+49 12 345 678"></material-input>
-            <material-input name="address" label="Address" value="Baker Street" valid></material-input>
+            <material-input name="address" label="Address" value="Baker Street" invalid  message="Are you Sherlock Holmes? Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></material-input>
             <button type="submit">Submit</button>
         </form>
     </body>

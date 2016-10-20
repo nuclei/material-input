@@ -78,6 +78,12 @@ Additionally it is possible to explicitly set a field to be `invalid` by using t
 document.querySelector('material-input.customValidatedItem').setCustomValidity('This is not valid.');
 ```
 
+#### Backend validation
+If you validate your forms via your backend (which you should!), you cann add an `invalid` or `valid` attribute to the `material-input`. This will set the field in the defined state.
+
+#### Error messages
+You can set the `message` attribute, which will add an error message below the field. This is always an error message, no matter what state the field is in.
+
 #### Autovalidate
 When adding the `autovalidate` attribute to the `material-input`, the field will be validated on every `keydown` event. However, this means a field with no validation rules will always be valid and receive the `valid` immediately.
 

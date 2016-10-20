@@ -45,12 +45,20 @@
                 assert.equal(el.getAttribute('value'), 'changedValue');
                 assert.equal(el.shadowRoot.querySelector('input').value, 'changedValue');
             });
-            // test('set the "value" property', function() {
-            //     el.shadowRoot.querySelector('input').select();
-            //     el.shadowRoot.querySelector('input').dispatchEvent(new KeyboardEvent('keydown', {key:8}));
-            //     assert.equal(el.getAttribute('value'), '');
-            // });
-            //
+
+
+            test('the "value" attribute is correctly synced', function() {
+                var input = el.shadowRoot.querySelector('.material-input__input');
+                // test that values are the same
+                assert.equal(el.value, input.value);
+                input.value = "abc";
+                // test that values are not the same
+                assert.notEqual(el.value, input.value);
+                dispatchInputEvent(input);
+                // validate that value has been updated
+                assert.equal(el.value, 'abc');
+            });
+
             test('set the "label" attribute', function() {
                 el.setAttribute('label', 'newLabel');
                 assert.equal(el.shadowRoot.querySelector('label').innerHTML, 'newLabel');
@@ -99,6 +107,13 @@
                 assert.equal(el.parentElement.querySelector('.material-input__hidden-input').getAttribute('name'), 'null');
             });
       });
+
+      function dispatchInputEvent(target) {
+        var e = new Event('input', {
+          bubbles: true
+        });
+        target.dispatchEvent(e);
+      };
     </script>
     </body>
 </html>

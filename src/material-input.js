@@ -90,7 +90,7 @@ class MaterialInput extends HTMLElement {
                     pointer-events: none;
                     position: absolute;
                     left: 10px;
-                    bottom: 1em;
+                    top: 1.42em;
                     transition: 0.2s ease all;
                 }
                 .material-input__container.no-animation .material-input__label,
@@ -104,7 +104,7 @@ class MaterialInput extends HTMLElement {
                 .material-input__input:focus ~ .material-input__label,
                 .material-input__container:not(.is-empty) .material-input__label,
                 .material-input__container.label-always-floats .material-input__label{
-                    bottom: 3em;
+                    top: .6em;
                     font-size: .75em;
                 }
                 .material-input__input:focus ~ .material-input__label,
@@ -158,12 +158,12 @@ class MaterialInput extends HTMLElement {
                     width:50%;
                 }
                 .material-input__message{
-                    position: absolute;
-                    bottom: 0;
-                    transform: translateY(100%);
                     font-size: 70%;
                     color: var(--material-input-invalid-color, rgb(224,49,49));
                     padding: .3rem 0 .5rem 10px;
+                }
+                .material-input__message:empty{
+                    display: none;
                 }
             </style>
             <div class="material-input__container no-animation${this.value == '' ? ' is-empty' : ''}">
@@ -259,7 +259,7 @@ class MaterialInput extends HTMLElement {
             this._setValid(false);
         }.bind(this));
         // pass on value when user enters content
-        this.$input.addEventListener('keyup', function(e){
+        this.$input.addEventListener('input', function(e){
             if(e.keyCode === 13){
                 if(this.$form.checkValidity()){
                     this.$form.submit();
@@ -281,12 +281,12 @@ class MaterialInput extends HTMLElement {
         }.bind(this));
         // if autovalidate is set to true, validate on key event
         if(this.hasAttribute('autovalidate') && String(this.getAttribute('autovalidate')) !== 'false'){
-            this.$input.addEventListener('keyup', function(){
+            this.$input.addEventListener('input', function(){
                 // check if is valid
                 this._checkValidity();
             }.bind(this));
         } else {
-            this.$input.addEventListener('keydown', function(){
+            this.$input.addEventListener('input', function(){
                 // check if is valid
                 if(this.$container.classList.contains('invalid') && this.$input.value !== '' && this.$input.validity.valid === true){
                     this._setValid(true);
@@ -327,7 +327,6 @@ class MaterialInput extends HTMLElement {
      */
     _setMessage(msg){
         this.$message.innerHTML = msg;
-        this.$container.style.marginBottom = this.$message.offsetHeight+'px';
     }
     /**
      * set name
