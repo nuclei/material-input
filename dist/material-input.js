@@ -118,8 +118,8 @@ var MaterialInput = function (_HTMLElement) {
             this.$hiddenInput.addEventListener('invalid', function () {
                 this._setValid(false);
             }.bind(this));
-            // pass on value when user enters content
-            this.$input.addEventListener('input', function (e) {
+            // submit on enters
+            this.$input.addEventListener('keydown', function (e) {
                 if (e.keyCode === 13) {
                     if (this.$form.checkValidity()) {
                         this.$form.submit();
@@ -129,6 +129,9 @@ var MaterialInput = function (_HTMLElement) {
                     }
                     return;
                 }
+            }.bind(this));
+            // pass on value when user enters content
+            this.$input.addEventListener('input', function (e) {
                 this._value(this.$input.value);
             }.bind(this));
             // pass in value and validate when user exits input field
