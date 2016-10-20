@@ -29,7 +29,6 @@ class MaterialInput extends HTMLElement {
                     position: relative;
                     background: transparent;
                     margin: .5em 0;
-                    --material-input-accent-color: var(--accent-color, rgb(54,79,199));
                 }
                 .material-input__container{
                     width: inherit;
@@ -109,7 +108,7 @@ class MaterialInput extends HTMLElement {
                 }
                 .material-input__input:focus ~ .material-input__label,
                 .material-input__container.is-empty .material-input__input[placeholder]:focus ~ .material-input__label{
-                    color: var(--material-input-highlight-color, --material-input-accent-color);
+                    color: var(--material-input-highlight-color, rgb(54,79,199));
                 }
                 /* errror state */
                 .material-input__container.invalid.label-always-floats .material-input__label,
@@ -137,7 +136,7 @@ class MaterialInput extends HTMLElement {
                     width:0;
                     bottom:0;
                     position:absolute;
-                    background: var(--material-input-highlight-color, --material-input-accent-color);
+                    background: var(--material-input-highlight-color, rgb(54,79,199));
                     transition:0.2s ease all;
                 }
                 .material-input__container.invalid .material-input__bar::before,

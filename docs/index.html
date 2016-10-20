@@ -10,24 +10,30 @@
         <style media="screen">
             body{
                 --accent-color: red;
+
                 margin: 0;
                 font-family: sans-serif;
             }
             height{
                 margin: 15px 0;
             }
-            material-input[name=name], material-input[name=lastname]{
+            material-input{
+                --accent-color: red;
+            }
+            material-input[name=name]{
                 font-size: 26px;
+                --accent-color: yellow;
                 --material-input-text-color: orange;
-                --material-input-placeholder-color: blue;
                 --material-input-highlight-color: indigo;
                 --material-input-invalid-color: red;
                 --material-input-valid-color: green;
-                --material-input-border-color: orange;
+                --material-input-border-color: gray;
                 --material-input-line-height: 3px;
                 --material-input-highlight-line-height: 8px;
             }
-            material-input[name=phone]{
+            material-input[name=password]{
+                --accent-color: teal;
+                --material-input-placeholder-color: gray;
                 width: 200px;
             }
             nav{
