@@ -31,7 +31,9 @@ var MaterialInput = function (_HTMLElement) {
                 set: function set(newValue) {
                     value = !newValue ? '' : newValue;
                     this._value(value);
-                    this.$input.value = value;
+                    if (this.$input.value !== value) {
+                        this.$input.value = value;
+                    }
                 }
             });
 
@@ -132,11 +134,11 @@ var MaterialInput = function (_HTMLElement) {
             }.bind(this));
             // pass on value when user enters content
             this.$input.addEventListener('input', function (e) {
-                this._value(this.$input.value);
+                this._setValue(this.$input.value);
             }.bind(this));
             // pass in value and validate when user exits input field
             this.$input.addEventListener('blur', function () {
-                this._value(this.$input.value);
+                this._setValue(this.$input.value);
                 if (this.hasAttribute('autovalidate') && String(this.getAttribute('autovalidate')) !== 'false') {
                     // check if is valid
                     this._checkValidity();
