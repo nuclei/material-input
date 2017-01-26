@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+    <script src="../dist/material-input.js"></script>
+    </head>
+    <body>
+        <!-- <test-fixture id="fixture">
+            <template>
+                <material-input value="test"></material-input>
+            </template>
+        </test-fixture> -->
+        <material-input value="test" id="fixture" name="inputName"></material-input>
+    <script>
+        suite('<material-input>', function() {
+            var el;
+
+            setup(function() {
+                // el = fixture('fixture');
+                el = document.getElementById('fixture');
+                el.setAttribute('value', 'test');
+                el.setAttribute('name', 'inputName');
+                el.removeAttribute('placeholder');
+                el.removeAttribute('label');
+            });
+
+            test('check the "value" property', function() {
+                assert.equal(el.value, 'test');
+            });
+
+            test('set the "value" attribute', function() {
+                el.setAttribute('value', 'newValue');
+                assert.equal(el.value, 'newValue');
+            });
+
+            test('set the "value" attribute', function() {
+                el.value = 'changedValue';
+                assert.equal(el.getAttribute('value'), 'changedValue');
+            });
+
+            test('set the "value" property', function() {
+                el.value = 'changedValue';
+                assert.equal(el.getAttribute('value'), 'changedValue');
+                assert.equal(el.shadowRoot.querySelector('input').value, 'changedValue');
+            });
+
+
+            test('the "value" attribute is correctly synced', function() {
+                var input = el.shadowRoot.querySelector('.material-input__input');
+                // test that values are the same
+                assert.equal(el.value, input.value);
+                input.value = "abc";
+                // test that values are not the same
+                assert.notEqual(el.value, input.value);
+                dispatchInputEvent(input);
+                // validate that value has been updated
+                assert.equal(el.value, 'abc');
+            });
+
+            test('set the "label" attribute', function() {
+                el.setAttribute('label', 'newLabel');
+                assert.equal(el.shadowRoot.querySelector('label').innerHTML, 'newLabel');
+            });
+
+            test('set the "placeholder" attribute', function() {
+                el.setAttribute('placeholder', 'newPlaceholder');
+                assert.equal(el.shadowRoot.querySelector('input').getAttribute('placeholder'), 'newPlaceholder');
+            });
+
+            test('set the first "placeholder" and than "label" attribute', function() {
+                el.setAttribute('placeholder', 'newPlaceholder');
+                el.setAttribute('label', 'newLabel');
+                assert.equal(el.shadowRoot.querySelector('input').getAttribute('placeholder'), 'newPlaceholder');
+                assert.equal(el.shadowRoot.querySelector('label').innerHTML, 'newLabel');
+                assert.isTrue(el.shadowRoot.querySelector('.material-input__container').classList.contains('label-always-floats'));
+            });
+
+            test('set the first "label" and than "placeholder" attribute', function() {
+                el.setAttribute('label', 'newLabel');
+                el.setAttribute('placeholder', 'newPlaceholder');
+                assert.equal(el.shadowRoot.querySelector('input').getAttribute('placeholder'), 'newPlaceholder');
+                assert.equal(el.shadowRoot.querySelector('label').innerHTML, 'newLabel');
+                assert.isTrue(el.shadowRoot.querySelector('.material-input__container').classList.contains('label-always-floats'));
+            });
+
+            test('set "label" and "placeholder" attribute, than remove "placeholder"', function() {
+                el.setAttribute('label', 'newLabel');
+                el.setAttribute('placeholder', 'newPlaceholder');
+                assert.equal(el.shadowRoot.querySelector('input').getAttribute('placeholder'), 'newPlaceholder');
+                assert.equal(el.shadowRoot.querySelector('label').innerHTML, 'newLabel');
+                assert.isTrue(el.shadowRoot.querySelector('.material-input__container').classList.contains('label-always-floats'));
+                el.removeAttribute('placeholder');
+                assert.isFalse(el.shadowRoot.querySelector('.material-input__container').classList.contains('label-always-floats'));
+            });
+
+            test('set the "name" attribute', function() {
+                assert.equal(el.parentElement.querySelector('.material-input__hidden-input').getAttribute('name'), 'inputName');
+                el.setAttribute('name', 'testName');
+                assert.equal(el.parentElement.querySelector('.material-input__hidden-input').getAttribute('name'), 'testName');
+            });
+
+            test('set the "name" attribute', function() {
+                assert.equal(el.parentElement.querySelector('.material-input__hidden-input').getAttribute('name'), 'inputName');
+                el.removeAttribute('name');
+                assert.equal(el.parentElement.querySelector('.material-input__hidden-input').getAttribute('name'), 'null');
+            });
+      });
+
+      function dispatchInputEvent(target) {
+        var e = new Event('input', {
+          bubbles: true
+        });
+        target.dispatchEvent(e);
+      };
+    </script>
+    </body>
+</html>
