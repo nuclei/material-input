@@ -1,6 +1,7 @@
 # Material-input
 An easy drop-in material design vanilla custom input element. HTML form ready, no framework dependencies, small footprint.
 
+[![Spec Custom Elements V0](https://img.shields.io/badge/spec-custom%20elements%20v0-979797.svg?style=flat-square)](https://www.w3.org/TR/custom-elements/) 😞
 [![Build Status](https://img.shields.io/travis/nuclei/material-input/master.svg?style=flat-square)](https://travis-ci.org/nuclei/material-input) [![npm](https://img.shields.io/npm/v/material-input.svg?style=flat-square)](https://www.npmjs.com/package/material-input) [![npm](https://img.shields.io/npm/dt/material-input.svg?style=flat-square)](https://www.npmjs.com/package/material-input) [![npm](https://img.shields.io/npm/l/material-input.svg?style=flat-square)](https://github.com/nuclei/material-input/blob/master/LICENSE)
 
 ## Demo
