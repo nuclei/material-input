@@ -2,7 +2,7 @@ module.exports = {
     "verbose": false,
     "plugins": {
         "local": {
-          "browsers": ["chrome", "firefox"]
+          "browsers": ["chrome"] // , "firefox"
       }
     //   istanbul: {
     //     dir: "./coverage",
@@ -15,4 +15,3 @@ module.exports = {
     //   }
     }
 };
-// , "firefox" , "safari"

@@ -2,7 +2,7 @@ language: node_js
 sudo: required
 dist: trusty
 addons:
-  # firefox: '46.0'
+  # firefox: latest
   apt:
     sources:
       - google-chrome
@@ -10,5 +10,5 @@ addons:
       - google-chrome-stable
 node_js:
   - '6'
-before_script: npm install && bower install --force
+before_script: npm install
 script: xvfb-run npm run travis
